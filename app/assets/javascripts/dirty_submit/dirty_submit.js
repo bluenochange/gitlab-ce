@@ -4,6 +4,7 @@ export default class DirtySubmit {
   constructor(form) {
     this.form = form;
     this.dirtyInputs = [];
+    this.isDisabled = true;
   }
 
   init() {
@@ -11,14 +12,15 @@ export default class DirtySubmit {
     this.submits = this.form.querySelectorAll('input[type=submit], button[type=submit]');
 
     this.inputs.forEach(DirtySubmit.initInput);
-    this.submits.forEach(submit => submit.setAttribute('disabled', ''));
+    this.toggleSubmission();
 
-    this.registerListener();
+    this.registerListeners();
   }
 
-  registerListener() {
+  registerListeners() {
     const throttledUpdateDirtyInput = _.throttle(event => this.updateDirtyInput(event), 400);
     this.form.addEventListener('input', throttledUpdateDirtyInput);
+    this.form.addEventListener('submit', () => this.formSubmit());
   }
 
   updateDirtyInput(event) {
@@ -27,7 +29,7 @@ export default class DirtySubmit {
     if (!input.dataset.dirtySubmitOriginalValue) return;
 
     this.updateDirtyInputs(input);
-    this.toggleSubmission(this.dirtyInputs.length === 0);
+    this.toggleSubmission();
   }
 
   updateDirtyInputs(input) {
@@ -36,22 +38,25 @@ export default class DirtySubmit {
     const indexOfInputName = this.dirtyInputs.indexOf(name);
     const isExisting = indexOfInputName !== -1;
 
-    if ((isDirty && isExisting) || (!isDirty && !isExisting)) return;
-
     if (isDirty && !isExisting) this.dirtyInputs.push(name);
     if (!isDirty && isExisting) this.dirtyInputs.splice(indexOfInputName, 1);
   }
 
-  toggleSubmission(isDisabled) {
+  toggleSubmission() {
+    this.isDisabled = this.dirtyInputs.length === 0;
     this.submits.forEach(submit => {
-      submit.disabled = isDisabled; // eslint-disable-line no-param-reassign
+      submit.disabled = this.isDisabled; // eslint-disable-line no-param-reassign
     });
   }
 
+  formSubmit() {
+    console.log('allow submit?', !this.isDisabled);
+    return !this.isDisabled;
+  }
+
   static initInput(input) {
-    /* eslint-disable no-param-reassign */
+    // eslint-disable-next-line no-param-reassign
     input.dataset.dirtySubmitOriginalValue = DirtySubmit.inputCurrentValue(input);
-    /* eslint-enable no-param-reassign */
   }
 
   static isInputCheckable(input) {
