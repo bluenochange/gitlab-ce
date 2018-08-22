@@ -5,14 +5,9 @@
 
 ## Summary
 
-Form submits are disabled and default submission behaviour is prevented until any of the form's inputs have their value changed.
+Prevent submitting forms with no changes.
 
 ## Usage
-
-Import and instantiate `DirtySubmit`, passing the constructor a form element.
-Call `DirtySubmit.prototype.init`.
-
-Form submission will be disabled until one of the input's values changes from the value it had when `DirtySubmit.prototype.init` was called.
 
 ```js
 import DirtySubmit from './dirty_submit/dirty_submit';
@@ -40,11 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## Technical overview
 
-Executing `DirtySubmit.prototype.init` will store the value of each form input as their `data-dirty-submit-original-value` attribute value. It also disables submission and registers an `input` event listener to handle input element value updates.
-
-When an `input` event reaches the form element provided at construction, `DirtySubmit.prototype.updateDirtyInput` is invoked.
-If the input element's current value is unequal to it's `data-dirty-submit-original-value` value, the input element's `name` attribute value is stored in the `DirtySubmit.prototype.dirtyInputs` array.
-Alternatively, if the values are equal, the input element's `name` will be removed from the array and `DirtySubmit.prototype.toggleSubmission` will be called, which will disable submission if the `DirtySubmit.prototype.dirtyInputs` array is empty and enable submission if it is not.
+DirtySubmit.prototype.init stores the original value of each form input as a data attribute. It also prevents submission and registers an `input` event listener to handle input element value updates.
 
 Currently handles `input`, `textarea` and `select` elements.
 
