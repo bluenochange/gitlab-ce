@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-export default class DirtySubmit {
+export default class DirtySubmitForm {
   constructor(form) {
     this.form = form;
     this.dirtyInputs = [];
@@ -11,7 +11,7 @@ export default class DirtySubmit {
     this.inputs = this.form.querySelectorAll('input, textarea, select');
     this.submits = this.form.querySelectorAll('input[type=submit], button[type=submit]');
 
-    this.inputs.forEach(DirtySubmit.initInput);
+    this.inputs.forEach(DirtySubmitForm.initInput);
     this.toggleSubmission();
 
     this.registerListeners();
@@ -34,7 +34,7 @@ export default class DirtySubmit {
 
   updateDirtyInputs(input) {
     const { name } = input;
-    const isDirty = input.dataset.dirtySubmitOriginalValue !== DirtySubmit.inputCurrentValue(input);
+    const isDirty = input.dataset.dirtySubmitOriginalValue !== DirtySubmitForm.inputCurrentValue(input);
     const indexOfInputName = this.dirtyInputs.indexOf(name);
     const isExisting = indexOfInputName !== -1;
 
@@ -56,7 +56,7 @@ export default class DirtySubmit {
 
   static initInput(input) {
     // eslint-disable-next-line no-param-reassign
-    input.dataset.dirtySubmitOriginalValue = DirtySubmit.inputCurrentValue(input);
+    input.dataset.dirtySubmitOriginalValue = DirtySubmitForm.inputCurrentValue(input);
   }
 
   static isInputCheckable(input) {
@@ -64,6 +64,6 @@ export default class DirtySubmit {
   }
 
   static inputCurrentValue(input) {
-    return DirtySubmit.isInputCheckable(input) ? input.checked.toString() : input.value;
+    return DirtySubmitForm.isInputCheckable(input) ? input.checked.toString() : input.value;
   }
 }

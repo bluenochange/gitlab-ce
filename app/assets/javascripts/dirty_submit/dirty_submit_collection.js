@@ -1,4 +1,4 @@
-import DirtySubmit from './dirty_submit';
+import DirtySubmitForm from './dirty_submit_form';
 
 export default class DirtySubmitCollection {
   constructor(formOrForms) {
@@ -6,7 +6,7 @@ export default class DirtySubmitCollection {
     this.forms = isCollection ? formOrForms : new Array(formOrForms);
 
     this.dirtySubmits = [];
-    this.forms.forEach(form => this.dirtySubmits.push(new DirtySubmit(form)));
+    this.forms.forEach(form => this.dirtySubmits.push(new DirtySubmitForm(form)));
   }
 
   init() {
