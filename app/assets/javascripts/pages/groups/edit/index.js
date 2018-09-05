@@ -13,8 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize expandable settings panels
   initSettingsPanels();
-  const dirtySubmit = dirtySubmitFactory(
+  dirtySubmitFactory(
     document.querySelectorAll('.js-general-settings-form, .js-general-permissions-form'),
   );
-  dirtySubmit.init();
 });

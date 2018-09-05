@@ -5,6 +5,8 @@ export default class DirtySubmitForm {
     this.form = form;
     this.dirtyInputs = [];
     this.isDisabled = true;
+
+    this.init();
   }
 
   init() {
