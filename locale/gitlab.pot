@@ -418,6 +418,9 @@ msgstr ""
 msgid "Allow commits from members who can merge to the target branch."
 msgstr ""
 
+msgid "Allow projects within this group to use Git LFS"
+msgstr ""
+
 msgid "Allow public access to pipelines and job details, including output logs and artifacts"
 msgstr ""
 
@@ -3250,6 +3253,9 @@ msgstr ""
 msgid "Labels|Promote Label"
 msgstr ""
 
+msgid "Large File Storage"
+msgstr ""
+
 msgid "Last %d day"
 msgid_plural "Last %d days"
 msgstr[0] ""
@@ -5526,6 +5532,9 @@ msgid "This repository"
 msgstr ""
 
 msgid "This runner will only run on pipelines triggered on protected branches"
+msgstr ""
+
+msgid "This setting can be overridden in each project."
 msgstr ""
 
 msgid "This source diff could not be displayed because it is too large."
