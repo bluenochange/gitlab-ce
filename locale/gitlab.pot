@@ -430,10 +430,19 @@ msgstr ""
 msgid "Allow requests to the local network from hooks and services."
 msgstr ""
 
+msgid "Allow users to request access"
+msgstr ""
+
+msgid "Allow users to request access if visibility is public or internal."
+msgstr ""
+
 msgid "Allows you to add and manage Kubernetes clusters."
 msgstr ""
 
 msgid "Alternatively, you can use a %{personal_access_token_link}. When you create your Personal Access Token, you will need to select the <code>repo</code> scope, so we can display a list of your public and private repositories which are available to import."
+msgstr ""
+
+msgid "Amount of time (in hours) that users are allowed to skip forced configuration of two-factor authentication"
 msgstr ""
 
 msgid "An application called %{link_to_client} is requesting access to your GitLab account."
@@ -4634,6 +4643,9 @@ msgstr ""
 msgid "Requests Profiles"
 msgstr ""
 
+msgid "Require all users in this group to setup Two-factor authentication"
+msgstr ""
+
 msgid "Require all users to accept Terms of Service and Privacy Policy when they access GitLab."
 msgstr ""
 
@@ -5818,6 +5830,9 @@ msgid "Try again"
 msgstr ""
 
 msgid "Twitter"
+msgstr ""
+
+msgid "Two-factor authentication"
 msgstr ""
 
 msgid "Unable to load the diff. %{button_try_again}"
