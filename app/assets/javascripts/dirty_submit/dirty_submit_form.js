@@ -5,8 +5,6 @@ export default class DirtySubmitForm {
     this.form = form;
     this.dirtyInputs = [];
     this.isDisabled = true;
-
-    this.init();
   }
 
   init() {
@@ -22,7 +20,7 @@ export default class DirtySubmitForm {
   registerListeners() {
     const throttledUpdateDirtyInput = _.throttle(event => this.updateDirtyInput(event), 400);
     this.form.addEventListener('input', throttledUpdateDirtyInput);
-    this.form.addEventListener('submit', () => this.formSubmit());
+    this.form.addEventListener('submit', event => this.formSubmit(event));
   }
 
   updateDirtyInput(event) {
@@ -51,8 +49,12 @@ export default class DirtySubmitForm {
     });
   }
 
-  formSubmit() {
-    console.log('allow submit?', !this.isDisabled);
+  formSubmit(event) {
+    if (this.isDisabled) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+
     return !this.isDisabled;
   }
 
