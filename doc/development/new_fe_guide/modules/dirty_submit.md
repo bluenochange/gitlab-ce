@@ -7,39 +7,36 @@
 
 Prevent submitting forms with no changes.
 
+Currently handles `input`, `textarea` and `select` elements.
+
 ## Usage
 
 ```js
-import DirtySubmit from './dirty_submit/dirty_submit';
+import DirtySubmitForm from './dirty_submit/dirty_submit_form';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const dirtySubmit = new DirtySubmit(document.querySelector('form'));
-  dirtySubmit.init();
-});
+new DirtySubmitForm(document.querySelector('form'));
 ```
 
 ### Multiple form elements
 
 Use the `DirtySubmitCollection` class to instantiate `DirtySubmit` for multiple forms by passing it's constructor a collection of forms _(`NodeList` or `Array`)_.
 
-It has a handy `DirtySubmitCollection.prototype.init` method that calls `DirtySubmit.prototype.init` for every object in the collection.
-
 ```js
 import DirtySubmitCollection from './dirty_submit/dirty_submit_collection';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const dirtySubmitCollection = new DirtySubmitCollection(document.querySelectorAll('form'));
-  dirtySubmitCollection.init();
-});
+new DirtySubmitCollection(document.querySelectorAll('form'));
 ```
 
-## Technical overview
+#### Factory method
 
-DirtySubmit.prototype.init stores the original value of each form input as a data attribute. It also prevents submission and registers an `input` event listener to handle input element value updates.
+Instantiate a `DirtySubmit*` class based on the arguments provided to `dirtySubmitFactory`. An `Array` or `NodeList` will return a `DirtySubmitCollection`, a single form element will return a `DirtySubmitForm`.
 
-Currently handles `input`, `textarea` and `select` elements.
+```js
+import dirtySubmitFactory from './dirty_submit/dirty_submit_factory';
 
-Note: The values of `radio` and `checkbox` inputs are read from their `checked` attribute rather than their `value` attribute.
+dirtySubmitFactory(document.querySelector('form'));
+dirtySubmitFactory(document.querySelectorAll('form'));
+```
 
 [ce-21115]: https://gitlab.com/gitlab-org/gitlab-ce/merge_requests/21115
 [dirty-submit]: https://gitlab.com/gitlab-org/gitlab-ce/blob/master/app/assets/javascripts/dirty_submit/
