@@ -143,7 +143,7 @@ describe 'Group' do
     it 'saves new settings' do
       page.within('.gs-general') do
         fill_in 'group_name', with: new_name
-        click_button 'Save group'
+        click_button 'Save changes'
       end
 
       expect(page).to have_content 'successfully updated'
