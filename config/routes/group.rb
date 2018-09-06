@@ -25,7 +25,6 @@ constraints(::Constraints::GroupUrlConstrainer.new) do
         constraints: { group_id: Gitlab::PathRegex.full_namespace_route_regex }) do
     namespace :settings do
       resource :ci_cd, only: [:show], controller: 'ci_cd'
-      resources :badges, only: [:index]
     end
 
     resource :variables, only: [:show, :update]
@@ -37,7 +36,7 @@ constraints(::Constraints::GroupUrlConstrainer.new) do
       post :toggle_subscription, on: :member
     end
 
-    resources :milestones, constraints: { id: %r{[^/]+} }, only: [:index, :show, :edit, :update, :new, :create] do
+    resources :milestones, constraints: { id: %r{[^/]+} } do
       member do
         get :merge_requests
         get :participants

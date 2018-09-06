@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180808162000) do
+ActiveRecord::Schema.define(version: 20180826111825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 20180808162000) do
     t.boolean "authorized_keys_enabled", default: true, null: false
     t.string "auto_devops_domain"
     t.boolean "pages_domain_verification_enabled", default: true, null: false
+    t.string "user_default_internal_regex"
     t.boolean "allow_local_requests_from_hooks_and_services", default: false, null: false
     t.boolean "enforce_terms", default: false
     t.boolean "mirror_available", default: true, null: false
@@ -341,6 +342,7 @@ ActiveRecord::Schema.define(version: 20180808162000) do
   add_index "ci_builds", ["commit_id", "status", "type"], name: "index_ci_builds_on_commit_id_and_status_and_type", using: :btree
   add_index "ci_builds", ["commit_id", "type", "name", "ref"], name: "index_ci_builds_on_commit_id_and_type_and_name_and_ref", using: :btree
   add_index "ci_builds", ["commit_id", "type", "ref"], name: "index_ci_builds_on_commit_id_and_type_and_ref", using: :btree
+  add_index "ci_builds", ["id"], name: "partial_index_ci_builds_on_id_with_legacy_artifacts", where: "(artifacts_file <> ''::text)", using: :btree
   add_index "ci_builds", ["project_id", "id"], name: "index_ci_builds_on_project_id_and_id", using: :btree
   add_index "ci_builds", ["protected"], name: "index_ci_builds_on_protected", using: :btree
   add_index "ci_builds", ["runner_id"], name: "index_ci_builds_on_runner_id", using: :btree
@@ -396,6 +398,7 @@ ActiveRecord::Schema.define(version: 20180808162000) do
     t.string "file"
     t.binary "file_sha256"
     t.integer "file_format", limit: 2
+    t.integer "file_location", limit: 2
   end
 
   add_index "ci_job_artifacts", ["expire_at", "job_id"], name: "index_ci_job_artifacts_on_expire_at_and_job_id", using: :btree
@@ -1135,6 +1138,7 @@ ActiveRecord::Schema.define(version: 20180808162000) do
 
   add_index "lists", ["board_id", "label_id"], name: "index_lists_on_board_id_and_label_id", unique: true, using: :btree
   add_index "lists", ["label_id"], name: "index_lists_on_label_id", using: :btree
+  add_index "lists", ["list_type"], name: "index_lists_on_list_type", using: :btree
 
   create_table "members", force: :cascade do |t|
     t.integer "access_level", null: false
@@ -1740,6 +1744,7 @@ ActiveRecord::Schema.define(version: 20180808162000) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "protected_tags", ["project_id", "name"], name: "index_protected_tags_on_project_id_and_name", unique: true, using: :btree
   add_index "protected_tags", ["project_id"], name: "index_protected_tags_on_project_id", using: :btree
 
   create_table "push_event_payloads", id: false, force: :cascade do |t|
@@ -2240,6 +2245,7 @@ ActiveRecord::Schema.define(version: 20180808162000) do
     t.boolean "repository_update_events", default: false, null: false
     t.boolean "job_events", default: false, null: false
     t.boolean "confidential_note_events"
+    t.text "push_events_branch_filter"
   end
 
   add_index "web_hooks", ["project_id"], name: "index_web_hooks_on_project_id", using: :btree

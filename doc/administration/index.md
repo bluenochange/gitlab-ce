@@ -46,6 +46,7 @@ Learn how to install, configure, update, and maintain your GitLab instance.
 - [Plugins](plugins.md): With custom plugins, GitLab administrators can introduce custom integrations without modifying GitLab's source code.
 - [Enforcing Terms of Service](../user/admin_area/settings/terms.md)
 - [Third party offers](../user/admin_area/settings/third_party_offers.md)
+- [Compliance](compliance.md): A collection of features from across the application that you may configure to help ensure that your GitLab instance and DevOps workflow meet compliance standards.
 
 #### Customizing GitLab's appearance
 
@@ -93,7 +94,6 @@ created in snippets, wikis, and repos.
   - [Postfix for incoming email](reply_by_email_postfix_setup.md): Set up a
   basic Postfix mail server with IMAP authentication on Ubuntu for incoming
   emails.
-- [User Cohorts](../user/admin_area/user_cohorts.md): Display the monthly cohorts of new users and their activities over time.
 
 [reply by email]: reply_by_email.md
 [issues by email]: ../user/project/issues/create_new_issue.md#new-issue-via-email
@@ -137,7 +137,6 @@ created in snippets, wikis, and repos.
   - [Monitoring uptime](../user/admin_area/monitoring/health_check.md): Check the server status using the health check endpoint.
     - [IP whitelist](monitoring/ip_whitelist.md): Monitor endpoints that provide health check information when probed.
     - [Monitoring GitHub imports](monitoring/github_imports.md): GitLab's GitHub Importer displays Prometheus metrics to monitor the health and progress of the importer.
-- [Conversational Development (ConvDev) Index](../user/admin_area/monitoring/convdev.md): Provides an overview of your entire instance's feature usage.
 
 ### Performance Monitoring
 
