@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import DirtySubmitCollection from './dirty_submit_collection';
 import DirtySubmitForm from './dirty_submit_form';
 

@@ -34,7 +34,8 @@ export default class DirtySubmitForm {
 
   updateDirtyInputs(input) {
     const { name } = input;
-    const isDirty = input.dataset.dirtySubmitOriginalValue !== DirtySubmitForm.inputCurrentValue(input);
+    const isDirty =
+      input.dataset.dirtySubmitOriginalValue !== DirtySubmitForm.inputCurrentValue(input);
     const indexOfInputName = this.dirtyInputs.indexOf(name);
     const isExisting = indexOfInputName !== -1;
 
