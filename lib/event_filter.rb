@@ -1,44 +1,46 @@
+# frozen_string_literal: true
+
 class EventFilter
-  attr_accessor :params
+  attr_accessor :filter
 
-  class << self
-    def all
-      'all'
-    end
+  FILTERS = %w[all push merged issue comments team].freeze
 
-    def push
-      'push'
-    end
-
-    def merged
-      'merged'
-    end
-
-    def issue
-      'issue'
-    end
-
-    def comments
-      'comments'
-    end
-
-    def team
-      'team'
-    end
+  def self.all
+    'all'
   end
 
-  def initialize(params)
-    @params = if params
-                params.dup
-              else
-                [] # EventFilter.default_filter
-              end
+  def self.push
+    'push'
+  end
+
+  def self.merged
+    'merged'
+  end
+
+  def self.issue
+    'issue'
+  end
+
+  def self.comments
+    'comments'
+  end
+
+  def self.team
+    'team'
+  end
+
+  def initialize(filter)
+    # Split using comma to maintain backward compatibility Ex/ "filter1,filter2"
+    filter = filter.to_s.split(',')[0].to_s
+    @filter = FILTERS.include?(filter) ? filter : self.class.all
+  end
+
+  def active?(key)
+    filter == key.to_s
   end
 
   def apply_filter(events)
-    return events if params.blank? || params == EventFilter.all
-
-    case params
+    case filter
     when EventFilter.push
       events.where(action: Event::PUSHED)
     when EventFilter.merged
@@ -49,26 +51,8 @@ class EventFilter
       events.where(action: [Event::JOINED, Event::LEFT, Event::EXPIRED])
     when EventFilter.issue
       events.where(action: [Event::CREATED, Event::UPDATED, Event::CLOSED, Event::REOPENED])
-    end
-  end
-
-  def options(key)
-    filter = params.dup
-
-    if filter.include? key
-      filter.delete key
     else
-      filter << key
-    end
-
-    filter
-  end
-
-  def active?(key)
-    if params.present?
-      params.include? key
-    else
-      key == EventFilter.all
+      events
     end
   end
 end
