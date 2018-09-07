@@ -203,6 +203,14 @@ module ProjectsHelper
       current_user.require_extra_setup_for_git_auth?
   end
 
+  def show_auto_devops_implicitly_enabled_banner?(project)
+    cookie_key = "hide_auto_devops_implicitly_enabled_banner_#{project.id}"
+
+    project.has_auto_devops_implicitly_enabled? &&
+      cookies[cookie_key.to_sym].blank? &&
+      (project.owner == current_user || project.team.maintainer?(current_user))
+  end
+
   def link_to_set_password
     if current_user.require_password_creation_for_git?
       link_to s_('SetPasswordToCloneLink|set a password'), edit_profile_password_path
@@ -250,6 +258,10 @@ module ProjectsHelper
 
   def xcode_uri_to_repo(project = @project)
     "xcode://clone?repo=#{CGI.escape(default_url_to_repo(project))}"
+  end
+
+  def legacy_render_context(params)
+    params[:legacy_render] ? { markdown_engine: :redcarpet } : {}
   end
 
   private
@@ -349,6 +361,10 @@ module ProjectsHelper
     else
       project.http_url_to_repo
     end
+  end
+
+  def default_clone_label
+    _("Copy %{protocol} clone URL") % { protocol: default_clone_protocol.upcase }
   end
 
   def default_clone_protocol
