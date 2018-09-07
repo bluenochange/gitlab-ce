@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-export default class DirtySubmitForm {
+class DirtySubmitForm {
   constructor(form) {
     this.form = form;
     this.dirtyInputs = [];
@@ -20,7 +20,7 @@ export default class DirtySubmitForm {
   }
 
   registerListeners() {
-    const throttledUpdateDirtyInput = _.throttle(event => this.updateDirtyInput(event), 400);
+    const throttledUpdateDirtyInput = _.throttle(event => this.updateDirtyInput(event), DirtySubmitForm.THROTTLE_DURATION);
     this.form.addEventListener('input', throttledUpdateDirtyInput);
     this.form.addEventListener('submit', event => this.formSubmit(event));
   }
@@ -73,3 +73,7 @@ export default class DirtySubmitForm {
     return DirtySubmitForm.isInputCheckable(input) ? input.checked.toString() : input.value;
   }
 }
+
+DirtySubmitForm.THROTTLE_DURATION = 400;
+
+export default DirtySubmitForm;
