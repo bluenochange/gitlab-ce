@@ -6,11 +6,5 @@ export default class DirtySubmitCollection {
 
     this.dirtySubmits = [];
     this.forms.forEach(form => this.dirtySubmits.push(new DirtySubmitForm(form)));
-
-    this.init();
-  }
-
-  init() {
-    this.dirtySubmits.forEach(dirtySubmit => dirtySubmit.init());
   }
 }
