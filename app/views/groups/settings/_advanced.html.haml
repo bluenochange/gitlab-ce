@@ -39,11 +39,11 @@
       = f.submit 'Transfer group', class: 'btn btn-warning'
 
 .sub-section
-  %h4.danger-title Remove group
+  %h4.danger-title= _('Remove group')
   = form_tag(@group, method: :delete) do
     %p
-      Removing group will cause all child projects and resources to be removed.
+      = _('Removing group will cause all child projects and resources to be removed.')
       %br
-      %strong Removed group can not be restored!
+      %strong= _('Removed group can not be restored!')
 
-    = button_to 'Remove group', '#', class: 'btn btn-remove js-confirm-danger', data: { 'confirm-danger-message' => remove_group_message(@group) }
+    = button_to _('Remove group'), '#', class: 'btn btn-remove js-confirm-danger', data: { 'confirm-danger-message' => remove_group_message(@group) }
