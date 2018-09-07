@@ -141,7 +141,7 @@ describe 'Group' do
     end
 
     it_behaves_like 'dirty submit form', [{ form: '.js-general-settings-form', input: 'input[name="group[name]"]' },
-      { form: '.js-general-permissions-form', input: 'input[name="group[two_factor_grace_period]"]' }]
+                                          { form: '.js-general-permissions-form', input: 'input[name="group[two_factor_grace_period]"]' }]
 
     it 'saves new settings' do
       page.within('.gs-general') do

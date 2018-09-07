@@ -1,5 +1,5 @@
-shared_examples 'dirty submit form' do |selectorArgs|
-  selectors = selectorArgs.kind_of?(Array) ? selectorArgs : [selectorArgs]
+shared_examples 'dirty submit form' do |selector_args|
+  selectors = selector_args.is_a?(Array) ? selector_args : [selector_args]
 
   selectors.each do |selector|
     it "disables #{selector[:form]} submit until there are changes", :js do

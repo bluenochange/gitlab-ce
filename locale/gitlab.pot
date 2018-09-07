@@ -1143,7 +1143,7 @@ msgstr ""
 msgid "Check the %{docs_link_start}documentation%{docs_link_end}."
 msgstr ""
 
-msgid "Check the documentation"
+msgid "Check the %{visibility_docs_link_start}documentation%{group_docs_link_end}."
 msgstr ""
 
 msgid "Checking %{text} availability…"
@@ -4189,6 +4189,9 @@ msgid "Perform advanced options such as changing path, transferring, or removing
 msgstr ""
 
 msgid "Performance optimization"
+msgstr ""
+
+msgid "Permissions"
 msgstr ""
 
 msgid "Permissions, LFS, 2FA"
