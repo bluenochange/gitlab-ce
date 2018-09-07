@@ -5,6 +5,8 @@ export default class DirtySubmitForm {
     this.form = form;
     this.dirtyInputs = [];
     this.isDisabled = true;
+
+    this.init();
   }
 
   init() {
@@ -45,8 +47,8 @@ export default class DirtySubmitForm {
 
   toggleSubmission() {
     this.isDisabled = this.dirtyInputs.length === 0;
-    this.submits.forEach(submit => {
-      submit.disabled = this.isDisabled; // eslint-disable-line no-param-reassign
+    this.submits.forEach(element => {
+      element.disabled = this.isDisabled;
     });
   }
 
@@ -59,9 +61,8 @@ export default class DirtySubmitForm {
     return !this.isDisabled;
   }
 
-  static initInput(input) {
-    // eslint-disable-next-line no-param-reassign
-    input.dataset.dirtySubmitOriginalValue = DirtySubmitForm.inputCurrentValue(input);
+  static initInput(element) {
+    element.dataset.dirtySubmitOriginalValue = DirtySubmitForm.inputCurrentValue(element);
   }
 
   static isInputCheckable(input) {
