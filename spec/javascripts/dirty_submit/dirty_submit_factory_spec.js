@@ -5,7 +5,7 @@ import { createForm } from './helper';
 
 describe('DirtySubmitCollection', () => {
   it('returns a DirtySubmitForm instance for single form elements', () => {
-    const form = createForm().form;
+    const { form } = createForm();
 
     expect(dirtySubmitFactory(form) instanceof DirtySubmitForm).toBe(true);
   });

@@ -20,7 +20,10 @@ class DirtySubmitForm {
   }
 
   registerListeners() {
-    const throttledUpdateDirtyInput = _.throttle(event => this.updateDirtyInput(event), DirtySubmitForm.THROTTLE_DURATION);
+    const throttledUpdateDirtyInput = _.throttle(
+      event => this.updateDirtyInput(event),
+      DirtySubmitForm.THROTTLE_DURATION,
+    );
     this.form.addEventListener('input', throttledUpdateDirtyInput);
     this.form.addEventListener('submit', event => this.formSubmit(event));
   }
