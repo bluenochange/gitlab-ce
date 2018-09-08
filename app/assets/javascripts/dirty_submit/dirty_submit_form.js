@@ -77,6 +77,6 @@ class DirtySubmitForm {
   }
 }
 
-DirtySubmitForm.THROTTLE_DURATION = 400;
+DirtySubmitForm.THROTTLE_DURATION = 400 + 100;
 
 export default DirtySubmitForm;

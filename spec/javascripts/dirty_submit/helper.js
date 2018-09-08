@@ -17,7 +17,7 @@ export function setInput(element, value) {
 export function createForm() {
   const form = document.createElement('form');
   form.innerHTML = `
-    <input type="text" value="original" class="js-input" />
+    <input type="text" value="original" class="js-input" name="input" />
     <button type="submit" class="js-dirty-submit"></button>
   `;
   const input = form.querySelector('.js-input');

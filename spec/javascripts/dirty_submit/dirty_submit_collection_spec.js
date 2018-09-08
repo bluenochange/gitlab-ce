@@ -10,12 +10,13 @@ describe('DirtySubmitCollection', () => {
 
     testElementsCollection.forEach(testElements => {
       const { input, submit } = testElements;
+      const originalValue = input.value;
 
       expect(submit.disabled).toBe(true);
 
-      setInput(input, `${input.value} changes`)
+      return setInput(input, `${originalValue} changes`)
         .then(() => expect(submit.disabled).toBe(false))
-        .then(() => setInput(input, input.value))
+        .then(() => setInput(input, originalValue))
         .then(() => expect(submit.disabled).toBe(true))
         .then(done)
         .catch(done.fail);
