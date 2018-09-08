@@ -2,7 +2,7 @@
 import DirtySubmitForm from '~/dirty_submit/dirty_submit_form';
 import { setInput, createForm } from './helper';
 
-fdescribe('DirtySubmitForm', () => {
+describe('DirtySubmitForm', () => {
   it('disables submit until there are changes', done => {
     const { form, input, submit } = createForm();
     const originalValue = input.value;
