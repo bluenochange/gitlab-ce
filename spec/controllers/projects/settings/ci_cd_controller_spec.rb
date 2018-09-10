@@ -74,6 +74,18 @@ describe Projects::Settings::CiCdController do
     end
   end
 
+  describe 'PUT #reset_registration_token' do
+    it 'resets runner registration token' do
+      expect { put :reset_registration_token, namespace_id: project.namespace, project_id: project }.to change { project.reload.runners_token }
+    end
+
+    it 'redirects the user to admin runners page' do
+      put :reset_registration_token, namespace_id: project.namespace, project_id: project
+
+      expect(response).to redirect_to(namespace_project_settings_ci_cd_path)
+    end
+  end
+
   describe 'PATCH update' do
     let(:params) { { ci_config_path: '' } }
 

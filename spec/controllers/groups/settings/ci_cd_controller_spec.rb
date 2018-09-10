@@ -17,4 +17,16 @@ describe Groups::Settings::CiCdController do
       expect(response).to render_template(:show)
     end
   end
+
+  describe 'PUT #reset_registration_token' do
+    it 'resets runner registration token' do
+      expect { put :reset_registration_token, group_id: group }.to change { group.reload.runners_token }
+    end
+
+    it 'redirects the user to admin runners page' do
+      put :reset_registration_token, group_id: group
+
+      expect(response).to redirect_to(group_settings_ci_cd_path)
+    end
+  end
 end

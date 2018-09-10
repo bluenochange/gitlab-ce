@@ -86,4 +86,20 @@ describe Admin::ApplicationSettingsController do
       expect(ApplicationSetting.current.receive_max_input_size).to eq(1024)
     end
   end
+
+  describe 'PUT #reset_runners_token' do
+    before do
+      sign_in(admin)
+    end
+
+    it 'resets runner registration token' do
+      expect { put :reset_runners_token }.to change { ApplicationSetting.current.runners_registration_token }
+    end
+
+    it 'redirects the user to admin runners page' do
+      put :reset_runners_token
+
+      expect(response).to redirect_to(admin_runners_path)
+    end
+  end
 end

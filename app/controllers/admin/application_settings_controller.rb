@@ -69,6 +69,7 @@ class Admin::ApplicationSettingsController < Admin::ApplicationController
 
   def reset_runners_token
     @application_setting.reset_runners_registration_token!
+
     flash[:notice] = 'New runners registration token has been generated!'
     redirect_to admin_runners_path
   end
