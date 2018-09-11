@@ -1,5 +1,7 @@
 module Gitlab
   class Highlight
+    MAXIMUM_TEXT_HIGHLIGHT_SIZE = 1.megabyte
+
     def self.highlight(blob_name, blob_content, language: nil, plain: false)
       new(blob_name, blob_content, language: language)
         .highlight(blob_content, continue: false, plain: plain)
@@ -15,6 +17,8 @@ module Gitlab
     end
 
     def highlight(text, continue: true, plain: false)
+      plain ||= text.length > MAXIMUM_TEXT_HIGHLIGHT_SIZE
+
       highlighted_text = highlight_text(text, continue: continue, plain: plain)
       highlighted_text = link_dependencies(text, highlighted_text) if blob_name
       highlighted_text
