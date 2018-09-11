@@ -91,6 +91,10 @@
         .fade-left= icon('angle-left')
         .fade-right= icon('angle-right')
         %ul.nav-links.user-profile-nav.scrolling-tabs.nav.nav-tabs
+          - if profile_tab?(:overview) && show_overview_tab?
+            %li.js-overview-tab
+              = link_to user_overview_path, data: { target: 'div#overview', action: 'overview', toggle: 'tab' } do
+                Overview
           - if profile_tab?(:activity)
             %li.js-activity-tab
               = link_to user_path, data: { target: 'div#activity', action: 'activity', toggle: 'tab' } do
@@ -114,6 +118,15 @@
 
   %div{ class: container_class }
     .tab-content
+      - if profile_tab?(:overview)
+        #overview.tab-pane
+          .row
+            .col-sm-6
+              Overview left column
+
+            .col-sm-6
+              Overview right column
+
       - if profile_tab?(:activity)
         #activity.tab-pane
           .row-content-block.calender-block.white.second-block.d-none.d-sm-block

@@ -76,7 +76,7 @@ module UsersHelper
     tabs = []
 
     if can?(current_user, :read_user_profile, @user)
-      tabs += [:activity, :groups, :contributed, :projects, :snippets]
+      tabs += [:overview, :activity, :groups, :contributed, :projects, :snippets]
     end
 
     tabs
@@ -94,5 +94,10 @@ module UsersHelper
     items << :settings if can?(current_user, :update_user, current_user)
 
     items
+  end
+
+  def show_overview_tab?
+    # enable feature by setting cookie: document.cookie = "user_overview_tab=true";
+    return cookies['user_overview_tab'] == 'true'
   end
 end
