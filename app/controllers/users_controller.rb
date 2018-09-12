@@ -32,6 +32,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def overview_activities
+    respond_to do |format|
+      format.json do
+        load_events
+        # pager_json("events/_events", @events.count)
+        render json: {
+          html: view_to_html_string("events/_events", events: @events)
+        }
+      end
+    end
+  end
+
   def groups
     load_groups
 

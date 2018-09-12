@@ -5,6 +5,7 @@ import { localTimeAgo } from '~/lib/utils/datetime_utility';
 import { __ } from '~/locale';
 import flash from '~/flash';
 import ActivityCalendar from './activity_calendar';
+import TopActivities from './top_activities';
 
 /**
  * UserTabs
@@ -123,7 +124,10 @@ export default class UserTabs {
       return;
     }
     if (action === 'activity') {
-      this.loadActivities();
+      this.loadActivities('activity');
+    } else if (action === 'overview') {
+      this.loadActivities('overview');
+      // TODO: add more stuff here
     }
 
     const loadableActions = ['groups', 'contributed', 'projects', 'snippets'];
@@ -150,11 +154,32 @@ export default class UserTabs {
       });
   }
 
-  loadActivities() {
-    if (this.loaded.activity) {
+  loadActivities(action) {
+    if (this.loaded[action]) {
       return;
     }
-    const $calendarWrap = this.$parentEl.find('.user-calendar');
+
+    this.loadActivityCalendar(action);
+
+    if (action === 'activity') {
+      // eslint-disable-next-line no-new
+      new Activities();
+    } else if (action === 'overview') {
+      // eslint-disable-next-line no-new
+      new TopActivities({
+        container: '.tab-pane#overview .top-activities',
+        url: $('.activity_list').data('href'),
+        limit: 5,
+      });
+    }
+
+    this.loaded[action] = true;
+  }
+
+  loadActivityCalendar(action) {
+    console.log('loadActivityCalendar :: ', action);
+    const monthsAgo = action === 'overview' ? -6 : -12;
+    const $calendarWrap = this.$parentEl.find('.tab-pane.active .user-calendar');
     const calendarPath = $calendarWrap.data('calendarPath');
     const calendarActivitiesPath = $calendarWrap.data('calendarActivitiesPath');
     const utcOffset = $calendarWrap.data('utcOffset');
@@ -170,13 +195,9 @@ export default class UserTabs {
         $calendarWrap.find('.calendar-hint').append(`(Timezone: ${utcFormatted})`);
 
         // eslint-disable-next-line no-new
-        new ActivityCalendar('.js-contrib-calendar', data, calendarActivitiesPath, utcOffset);
+        new ActivityCalendar('.js-contrib-calendar', data, calendarActivitiesPath, utcOffset, 0, monthsAgo);
       })
       .catch(() => flash(__('There was an error loading users activity calendar.')));
-
-    // eslint-disable-next-line no-new
-    new Activities();
-    this.loaded.activity = true;
   }
 
   toggleLoading(status) {

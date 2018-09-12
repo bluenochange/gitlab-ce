@@ -46,6 +46,7 @@ scope(constraints: { username: Gitlab::PathRegex.root_namespace_route_regex }) d
     get :snippets
     get :exists
     get :overview
+    get :overview_activities
     get '/', to: redirect('%{username}'), as: nil
   end
 

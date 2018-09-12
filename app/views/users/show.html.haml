@@ -122,7 +122,21 @@
         #overview.tab-pane
           .row
             .col-sm-6
-              Overview left column
+              %h4.prepend-top-20
+                Activity
+              .row-content-block.calender-block.white.second-block.d-none.d-sm-block
+                .user-calendar{ data: { calendar_path: user_calendar_path(@user, :json), calendar_activities_path: user_calendar_activities_path, utc_offset: Time.zone.utc_offset } }
+                  %h4.center.light
+                    %i.fa.fa-spinner.fa-spin
+                .user-calendar-activities
+
+              - if can?(current_user, :read_cross_project)
+                .top-activities
+                  %h5.prepend-top-10
+                    Recent contributions
+                  .activity_list{ data: { href: user_overview_activities_path } }
+                    %h4.center.light
+                      %i.fa.fa-spinner.fa-spin
 
             .col-sm-6
               Overview right column

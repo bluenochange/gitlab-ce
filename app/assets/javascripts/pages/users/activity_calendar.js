@@ -43,7 +43,14 @@ const initColorKey = () =>
     .domain([0, 3]);
 
 export default class ActivityCalendar {
-  constructor(container, timestamps, calendarActivitiesPath, utcOffset = 0, firstDayOfWeek = 0) {
+  constructor(
+    container,
+    timestamps,
+    calendarActivitiesPath,
+    utcOffset = 0,
+    firstDayOfWeek = 0,
+    monthsAgo = -12,
+  ) {
     this.calendarActivitiesPath = calendarActivitiesPath;
     this.clickDay = this.clickDay.bind(this);
     this.currentSelectedDate = '';
@@ -75,13 +82,13 @@ export default class ActivityCalendar {
     const today = getSystemDate(utcOffset);
     today.setHours(0, 0, 0, 0, 0);
 
-    const oneYearAgo = new Date(today);
-    oneYearAgo.setFullYear(today.getFullYear() - 1);
+    const timeAgo = new Date(today);
+    timeAgo.setMonth(today.getMonth() + monthsAgo);
 
-    const days = getDayDifference(oneYearAgo, today);
+    const days = getDayDifference(timeAgo, today);
 
     for (let i = 0; i <= days; i += 1) {
-      const date = new Date(oneYearAgo);
+      const date = new Date(timeAgo);
       date.setDate(date.getDate() + i);
 
       const day = date.getDay();
