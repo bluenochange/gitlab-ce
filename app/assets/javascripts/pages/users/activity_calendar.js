@@ -73,6 +73,7 @@ export default class ActivityCalendar {
     ];
     this.months = [];
     this.firstDayOfWeek = firstDayOfWeek;
+    this.container = container;
 
     // Loop through the timestamps to create a group of objects
     // The group of objects will be grouped based on the day of the week they are
@@ -287,7 +288,7 @@ export default class ActivityCalendar {
         this.currentSelectedDate.getDate(),
       ].join('-');
 
-      $('.user-calendar-activities').html(LOADING_HTML);
+      $(`${this.container} .user-calendar-activities`).html(LOADING_HTML);
 
       axios
         .get(this.calendarActivitiesPath, {
@@ -296,11 +297,11 @@ export default class ActivityCalendar {
           },
           responseType: 'text',
         })
-        .then(({ data }) => $('.user-calendar-activities').html(data))
+        .then(({ data }) => $(`${this.container} .user-calendar-activities`).html(data))
         .catch(() => flash(__('An error occurred while retrieving calendar activity')));
     } else {
       this.currentSelectedDate = '';
-      $('.user-calendar-activities').html('');
+      $(`${this.container} .user-calendar-activities`).html('');
     }
   }
 }

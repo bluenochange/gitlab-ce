@@ -62,14 +62,24 @@ import UserOverviewBlock from './user_overview_block';
  * </div>
  */
 
-const CALENDAR_TEMPLATE = `
-  <div class="clearfix calendar">
-    <div class="js-contrib-calendar"></div>
-    <div class="calendar-hint">
-      Summary of issues, merge requests, push events, and comments
+const CALENDAR_TEMPLATES = {
+  activity: `
+    <div class="clearfix calendar">
+      <div class="js-contrib-calendar"></div>
+      <div class="calendar-hint">
+        Summary of issues, merge requests, push events, and comments
+      </div>
     </div>
-  </div>
-`;
+  `,
+  overview: `
+    <div class="clearfix calendar">
+      <div>
+        <span class="label">Issues, merge requests, pushes and comments.</span>
+      </div>    
+      <div class="js-contrib-calendar prepend-top-10"></div>
+    </div>
+  `,
+};
 
 export default class UserTabs {
   constructor({ defaultAction, action, parentEl }) {
@@ -202,11 +212,11 @@ export default class UserTabs {
     axios
       .get(calendarPath)
       .then(({ data }) => {
-        $calendarWrap.html(CALENDAR_TEMPLATE);
+        $calendarWrap.html(CALENDAR_TEMPLATES[action]);
         $calendarWrap.find('.calendar-hint').append(`(Timezone: ${utcFormatted})`);
 
         // eslint-disable-next-line no-new
-        new ActivityCalendar('.js-contrib-calendar', data, calendarActivitiesPath, utcOffset, 0, monthsAgo);
+        new ActivityCalendar('.tab-pane.active .js-contrib-calendar', data, calendarActivitiesPath, utcOffset, 0, monthsAgo);
       })
       .catch(() => flash(__('There was an error loading users activity calendar.')));
   }
