@@ -36,9 +36,9 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.json do
         load_events
-        # pager_json("events/_events", @events.count)
         render json: {
-          html: view_to_html_string("events/_events", events: @events)
+          html: view_to_html_string("events/_events", events: @events),
+          count: @events.count
         }
       end
     end

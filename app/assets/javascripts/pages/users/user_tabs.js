@@ -5,7 +5,7 @@ import { localTimeAgo } from '~/lib/utils/datetime_utility';
 import { __ } from '~/locale';
 import flash from '~/flash';
 import ActivityCalendar from './activity_calendar';
-import TopActivities from './top_activities';
+import UserOverviewBlock from './user_overview_block';
 
 /**
  * UserTabs
@@ -124,10 +124,9 @@ export default class UserTabs {
       return;
     }
     if (action === 'activity') {
-      this.loadActivities('activity');
+      this.loadActivities();
     } else if (action === 'overview') {
-      this.loadActivities('overview');
-      // TODO: add more stuff here
+      this.loadOverviewTab();
     }
 
     const loadableActions = ['groups', 'contributed', 'projects', 'snippets'];
@@ -154,30 +153,42 @@ export default class UserTabs {
       });
   }
 
-  loadActivities(action) {
-    if (this.loaded[action]) {
+  loadActivities() {
+    if (this.loaded.activity) {
       return;
     }
 
-    this.loadActivityCalendar(action);
+    this.loadActivityCalendar('activity');
 
-    if (action === 'activity') {
-      // eslint-disable-next-line no-new
-      new Activities();
-    } else if (action === 'overview') {
-      // eslint-disable-next-line no-new
-      new TopActivities({
-        container: '.tab-pane#overview .top-activities',
-        url: $('.activity_list').data('href'),
-        limit: 5,
-      });
+    // eslint-disable-next-line no-new
+    new Activities();
+
+    this.loaded.activity = true;
+  }
+
+  loadOverviewTab() {
+    if (this.loaded.overview) {
+      return;
     }
 
-    this.loaded[action] = true;
+    this.loadActivityCalendar('overview');
+
+    UserTabs.renderMostRecentBlocks('.tab-pane#overview .activities-block', 5);
+    UserTabs.renderMostRecentBlocks('.tab-pane#overview .projects-block', 10);
+
+    this.loaded.overview = true;
+  }
+
+  static renderMostRecentBlocks(container, limit) {
+    // eslint-disable-next-line no-new
+    new UserOverviewBlock({
+      container,
+      url: $(`${container} .overview_content_list`).data('href'),
+      limit,
+    });
   }
 
   loadActivityCalendar(action) {
-    console.log('loadActivityCalendar :: ', action);
     const monthsAgo = action === 'overview' ? -6 : -12;
     const $calendarWrap = this.$parentEl.find('.tab-pane.active .user-calendar');
     const calendarPath = $calendarWrap.data('calendarPath');
