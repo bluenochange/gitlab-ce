@@ -42,10 +42,13 @@
 }
 
 .calendar-hint {
-  margin-top: -23px;
-  float: right;
   font-size: 12px;
-  direction: ltr;
+
+  &.bottom-right {
+    direction: ltr;
+    margin-top: -23px;
+    float: right;
+  }
 }
 
 .pika-single.gitlab-theme {

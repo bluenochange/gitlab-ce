@@ -1,10 +1,10 @@
 .row
   .col-sm-6
-    .calender-block
+    .calendar-block
       .content-block.hide-bottom-border.d-none.d-sm-block
         %h4
           Activity
-        .user-calendar{ data: { calendar_path: user_calendar_path(@user, :json), calendar_activities_path: user_calendar_activities_path, utc_offset: Time.zone.utc_offset } }
+        .user-calendar.text-left{ data: { calendar_path: user_calendar_path(@user, :json), calendar_activities_path: user_calendar_activities_path, utc_offset: Time.zone.utc_offset } }
           %h4.center.light
             %i.fa.fa-spinner.fa-spin
           .user-calendar-activities
