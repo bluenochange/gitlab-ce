@@ -32,6 +32,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def overview
+    respond_to do |format|
+      format.html { render 'show' }
+    end
+  end
+
   def overview_activities
     respond_to do |format|
       format.json do
