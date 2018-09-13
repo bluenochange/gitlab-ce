@@ -44,6 +44,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def overview_projects
+    respond_to do |format|
+      format.json do
+        load_projects
+        render json: {
+          html: view_to_html_string("shared/projects/_list", projects: @projects),
+          count: @projects.count
+        }
+      end
+    end
+  end
+
   def groups
     load_groups
 
@@ -135,6 +147,13 @@ class UsersController < ApplicationController
     @projects =
       PersonalProjectsFinder.new(user).execute(current_user)
       .page(params[:page])
+
+    @projects =
+    if limit = params[:limit].presence
+      @projects.limit(limit.to_i)
+    else
+      @projects
+    end    
 
     prepare_projects_for_rendering(@projects)
   end
