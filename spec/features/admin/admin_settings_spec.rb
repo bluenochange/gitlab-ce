@@ -240,16 +240,6 @@ describe 'Admin updates settings' do
     expect(find_field('Allowed group').value).to be_nil
   end
 
-  it 'Change Background jobs settings' do
-    page.within('.as-background') do
-      fill_in 'Throttling Factor', with: 1
-      click_button 'Save changes'
-    end
-
-    expect(Gitlab::CurrentSettings.sidekiq_throttling_factor).to eq(1)
-    expect(page).to have_content "Application settings saved successfully"
-  end
-
   it 'Change Spam settings' do
     page.within('.as-spam') do
       check 'Enable reCAPTCHA'
