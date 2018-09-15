@@ -437,4 +437,14 @@ table.u2f-registrations {
       }
     }
   }
+
+  .inline-wrapper {
+    .checkbox {
+      display: inline;
+
+      label {
+        display: inline;
+      }
+    }
+  }
 }
