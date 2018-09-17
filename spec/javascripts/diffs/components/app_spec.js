@@ -1,8 +1,18 @@
 import Vue from 'vue';
 import { mountComponentWithStore } from 'spec/helpers/vue_mount_component_helper';
 import { TEST_HOST } from 'spec/test_constants';
+import { convertObjectPropsToCamelCase } from '~/lib/utils/common_utils';
 import App from '~/diffs/components/app.vue';
 import createDiffsStore from '../create_diffs_store';
+
+const DIFF_JSON_FIXTURE = 'merge_request_diffs/with_commit.json';
+
+preloadFixtures(DIFF_JSON_FIXTURE);
+
+const getDiffData = () => convertObjectPropsToCamelCase(
+  getJSONFixture(DIFF_JSON_FIXTURE),
+  { deep: true },
+);
 
 describe('diffs/components/app', () => {
   const oldMrTabs = window.mrTabs;
@@ -36,12 +46,17 @@ describe('diffs/components/app', () => {
     vm.$destroy();
   });
 
+  it('does not show commit info', () => {
+    expect(vm.$el).not.toContainElement('.blob-commit-info');
+  });
+
   it('shows comments message, with commit', done => {
-    vm.$store.state.diffs.commit = {};
+    vm.$store.state.diffs.commit = getDiffData().commit;
 
     vm.$nextTick()
       .then(() => {
         expect(vm.$el).toContainText('Only comments from the following commit are shown below');
+        expect(vm.$el).toContainElement('.blob-commit-info');
       })
       .then(done)
       .catch(done.fail);
