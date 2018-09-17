@@ -45,6 +45,7 @@ const initColorKey = () =>
 export default class ActivityCalendar {
   constructor(
     container,
+    activitiesContainer,
     timestamps,
     calendarActivitiesPath,
     utcOffset = 0,
@@ -73,6 +74,7 @@ export default class ActivityCalendar {
     ];
     this.months = [];
     this.firstDayOfWeek = firstDayOfWeek;
+    this.activitiesContainer = activitiesContainer;
     this.container = container;
 
     // Loop through the timestamps to create a group of objects
@@ -288,7 +290,7 @@ export default class ActivityCalendar {
         this.currentSelectedDate.getDate(),
       ].join('-');
 
-      $(`${this.container} .user-calendar-activities`).html(LOADING_HTML);
+      $(this.activitiesContainer).html(LOADING_HTML);
 
       axios
         .get(this.calendarActivitiesPath, {
@@ -297,11 +299,11 @@ export default class ActivityCalendar {
           },
           responseType: 'text',
         })
-        .then(({ data }) => $(`${this.container} .user-calendar-activities`).html(data))
+        .then(({ data }) => $(this.activitiesContainer).html(data))
         .catch(() => flash(__('An error occurred while retrieving calendar activity')));
     } else {
       this.currentSelectedDate = '';
-      $(`${this.container} .user-calendar-activities`).html('');
+      $(this.activitiesContainer).html('');
     }
   }
 }

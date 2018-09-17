@@ -26,7 +26,6 @@ export default class UserOverviewBlock {
 
   render(data) {
     const { html, count } = data;
-    console.log('SummaryBlock :: ', data);
     $(`${this.container} .overview_content_list`).append(html);
 
     if (count && count > 0) {

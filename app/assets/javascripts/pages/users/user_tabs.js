@@ -217,7 +217,7 @@ export default class UserTabs {
         }
 
         // eslint-disable-next-line no-new
-        new ActivityCalendar('.tab-pane.active .js-contrib-calendar', data, calendarActivitiesPath, utcOffset, 0, monthsAgo);
+        new ActivityCalendar('.tab-pane.active .js-contrib-calendar', '.tab-pane.active .user-calendar-activities', data, calendarActivitiesPath, utcOffset, 0, monthsAgo);
       })
       .catch(() => flash(__('There was an error loading users activity calendar.')));
   }
