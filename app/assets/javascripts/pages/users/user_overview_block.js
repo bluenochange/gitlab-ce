@@ -1,5 +1,3 @@
-/* eslint-disable class-methods-use-this */
-
 import $ from 'jquery';
 import axios from '~/lib/utils/axios_utils';
 
