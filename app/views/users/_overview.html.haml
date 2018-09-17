@@ -1,17 +1,17 @@
 .row
-  .col-sm-6
+  .col-md-6.col-sm-12
     .calendar-block
-      .content-block.hide-bottom-border.d-none.d-sm-block
+      .content-block.hide-bottom-border.d-sm-block
         %h4
           Activity
-        .user-calendar.text-left{ data: { calendar_path: user_calendar_path(@user, :json), calendar_activities_path: user_calendar_activities_path, utc_offset: Time.zone.utc_offset } }
+        .user-calendar.d-none.d-sm-block.text-left{ data: { calendar_path: user_calendar_path(@user, :json), calendar_activities_path: user_calendar_activities_path, utc_offset: Time.zone.utc_offset } }
           %h4.center.light
             %i.fa.fa-spinner.fa-spin
-        .user-calendar-activities
+        .user-calendar-activities.d-none.d-sm-block
 
     - if can?(current_user, :read_cross_project)
       .activities-block
-        .content-block.d-none.d-sm-block
+        .content-block.d-sm-block
           %h5.prepend-top-10
             Recent contributions
           .overview_content_list{ data: { href: user_overview_activities_path } }
@@ -20,7 +20,7 @@
         .prepend-top-10
           = link_to 'View all', user_path, class: "hide js-view-all"
 
-  .col-sm-6
+  .col-md-6.col-sm-12
     .projects-block
       .content-block.d-none.d-sm-block
         %h4
