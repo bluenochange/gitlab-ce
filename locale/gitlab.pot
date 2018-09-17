@@ -1738,6 +1738,9 @@ msgstr ""
 msgid "CommitMessage|Add %{file_name}"
 msgstr ""
 
+msgid "CommitWidget|authored"
+msgstr ""
+
 msgid "Commits"
 msgstr ""
 
