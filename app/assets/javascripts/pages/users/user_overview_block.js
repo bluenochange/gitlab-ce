@@ -28,6 +28,8 @@ export default class UserOverviewBlock {
 
     if (count && count > 0) {
       $(`${this.container} .js-view-all`).removeClass('hide');
+    } else {
+      $(`${this.container} .nothing-here-block`).addClass('text-left p-0');
     }
 
     this.$loading.hide();
