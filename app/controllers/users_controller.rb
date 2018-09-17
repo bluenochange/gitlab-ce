@@ -155,11 +155,11 @@ class UsersController < ApplicationController
       .page(params[:page])
 
     @projects =
-    if limit = params[:limit].presence
-      @projects.limit(limit.to_i)
-    else
-      @projects
-    end    
+      if limit = params[:limit].presence
+        @projects.limit(limit.to_i)
+      else
+        @projects
+      end
 
     prepare_projects_for_rendering(@projects)
   end
