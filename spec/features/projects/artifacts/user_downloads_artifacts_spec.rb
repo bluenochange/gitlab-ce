@@ -31,7 +31,7 @@ describe "User downloads artifacts" do
       it_behaves_like "downloading"
     end
 
-    context "via clicking the `Download` button" do
+    context "via clicking the `Download` button", :js do
       set(:url) { project_job_path(project, job) }
 
       before do

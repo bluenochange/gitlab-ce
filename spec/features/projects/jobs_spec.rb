@@ -199,7 +199,7 @@ describe 'Jobs', :clean_gitlab_redis_shared_state do
       it { expect(page.status_code).to eq(404) }
     end
 
-    context "Download artifacts" do
+    context "Download artifacts", :js do
       before do
         job.update(legacy_artifacts_file: artifacts_file)
         visit project_job_path(project, job)
@@ -210,7 +210,7 @@ describe 'Jobs', :clean_gitlab_redis_shared_state do
       end
     end
 
-    context 'Artifacts expire date' do
+    context 'Artifacts expire date', :js do
       before do
         job.update(legacy_artifacts_file: artifacts_file,
                    artifacts_expire_at: expire_at)
@@ -542,10 +542,12 @@ describe 'Jobs', :clean_gitlab_redis_shared_state do
     end
   end
 
-  describe "GET /:project/jobs/:id/download" do
+  describe "GET /:project/jobs/:id/download", :js do
     before do
       job.update(legacy_artifacts_file: artifacts_file)
       visit project_job_path(project, job)
+
+      wait_for_requests
       click_link 'Download'
     end
 
