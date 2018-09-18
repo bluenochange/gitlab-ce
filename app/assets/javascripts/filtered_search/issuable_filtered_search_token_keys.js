@@ -1,6 +1,6 @@
 import FilteredSearchTokenKeys from './filtered_search_token_keys';
 
-const tokenKeys = [{
+export const tokenKeys = [{
   key: 'author',
   type: 'string',
   param: 'username',
@@ -19,14 +19,14 @@ const tokenKeys = [{
   type: 'string',
   param: 'title',
   symbol: '%',
-  icon: 'clock-o',
+  icon: 'clock',
   tag: '%milestone',
 }, {
   key: 'label',
   type: 'array',
   param: 'name[]',
   symbol: '~',
-  icon: 'tag',
+  icon: 'labels',
   tag: '~label',
 }];
 
@@ -37,19 +37,19 @@ if (gon.current_user_id) {
     type: 'string',
     param: 'emoji',
     symbol: '',
-    icon: 'thumbs-up',
+    icon: 'thumb-up',
     tag: 'emoji',
   });
 }
 
-const alternativeTokenKeys = [{
+export const alternativeTokenKeys = [{
   key: 'label',
   type: 'string',
   param: 'name',
   symbol: '~',
 }];
 
-const conditions = [{
+export const conditions = [{
   url: 'assignee_id=0',
   tokenKey: 'assignee',
   value: 'none',
