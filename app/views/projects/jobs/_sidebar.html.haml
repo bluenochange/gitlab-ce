@@ -3,18 +3,6 @@
     .blocks-container
       #js-details-block-vue{ data: { terminal_path: can?(current_user, :create_build_terminal, @build) && @build.has_terminal? ? terminal_project_job_path(@project, @build) : nil } }
 
-      %div{ class: (@build.pipeline.stages_count > 1 ? "block" : "block-last") }
-        %p
-          Commit
-          = link_to @build.pipeline.short_sha, project_commit_path(@project, @build.pipeline.sha), class: 'commit-sha link-commit'
-          = clipboard_button(text: @build.pipeline.short_sha, title: "Copy commit SHA to clipboard")
-          - if @build.merge_request
-            in
-            = link_to "#{@build.merge_request.to_reference}", merge_request_path(@build.merge_request), class: 'link-commit'
-
-        %p.build-light-text.append-bottom-0
-          #{@build.pipeline.git_commit_title}
-
       - if @build.pipeline.stages_count > 1
         .block-last.dropdown.build-dropdown
           %div

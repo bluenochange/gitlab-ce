@@ -13,7 +13,7 @@
     },
     computed: {
       hasVariables() {
-        return this.trigger.variables.length > 0;
+        return this.trigger.variables && this.trigger.variables.length > 0;
       },
     },
     methods: {
@@ -42,10 +42,10 @@
 
     <p v-if="hasVariables">
       <button
+        v-if="!areVariablesVisible"
         type="button"
         class="btn btn-default group js-reveal-variables"
         @click="revealVariables"
-        v-if="!areVariablesVisible"
       >
         {{ __('Reveal Variables') }}
       </button>

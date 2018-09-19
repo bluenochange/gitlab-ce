@@ -6,11 +6,13 @@
   import DetailRow from './sidebar_detail_row.vue';
   import ArtifactsBlock from './artifacts_block.vue';
   import TriggerBlock from './trigger_block.vue';
+  import CommitBlock from './commit_block.vue';
 
   export default {
     name: 'SidebarDetailsBlock',
     components: {
       ArtifactsBlock,
+      CommitBlock,
       DetailRow,
       Icon,
       TriggerBlock,
@@ -92,7 +94,18 @@
       },
       hasTriggers() {
         return !_.isEmpty(this.job.trigger);
-      }
+      },
+      hasStages() {
+        return (
+          this.job &&
+          this.job.pipeline &&
+          this.job.pipeline.stages &&
+          this.job.pipeline.stages.length > 0
+        ) || false;
+      },
+      commit() {
+        return this.job.pipeline.commit || {};
+      },
     },
   };
 </script>
@@ -247,6 +260,11 @@
       <trigger-block
         v-if="hasTriggers"
         :trigger="job.trigger"
+      />
+      <commit-block
+        :is-last-block="hasStages"
+        :commit="commit"
+        :merge-request="job.merge_request"
       />
     </template>
     <gl-loading-icon

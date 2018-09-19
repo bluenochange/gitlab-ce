@@ -1,10 +1,14 @@
 <script>
-  import TimeagoTooltiop from '~/vue_shared/components/time_ago_tooltip.vue';
+  import TimeagoTooltip from '~/vue_shared/components/time_ago_tooltip.vue';
+  import timeagoMixin from '~/vue_shared/mixins/timeago';
 
   export default {
     components: {
-      TimeagoTooltiop,
+      TimeagoTooltip,
     },
+    mixins: [
+      timeagoMixin,
+    ],
     props: {
       artifact: {
         type: Object,
@@ -35,14 +39,15 @@
     >
       {{ s__('Job|The artifacts were removed') }}
     </p>
+
     <p
       v-else-if="willExpire"
       class="js-artifacts-will-be-removed build-detail-row"
     >
-      {{ s__('Job|The artifacts will be removed') }}
+      {{ s__('Job|The artifacts will be removed in') }}
     </p>
 
-    <timeago-tooltiop
+    <timeago-tooltip
       v-if="artifact.expire_at"
       :time="artifact.expire_at"
     />
