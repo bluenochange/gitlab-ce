@@ -118,7 +118,7 @@
 
   %div{ class: container_class }
     .tab-content
-      - if profile_tab?(:overview)
+      - if profile_tab?(:overview) && show_overview_tab?
         #overview.tab-pane
           = render "users/overview"
 
