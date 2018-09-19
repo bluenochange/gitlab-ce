@@ -27,7 +27,7 @@ class UserRecentEventsFinder
     recent_events(params[:offset] || 0)
       .joins(:project)
       .with_associations
-      .limit_recent(params[:limit] || LIMIT, params[:offset])
+      .limit_recent(params[:limit].presence || LIMIT, params[:offset])
   end
 
   private
