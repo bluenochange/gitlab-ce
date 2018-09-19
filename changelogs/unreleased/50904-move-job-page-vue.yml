@@ -1,5 +1,5 @@
 ---
-title: Use Vue component to render Artifacts block on Job page
-merge_request:
+title: Use Vue components and new API to render Artifacts, Trigger Variables and Commit blocks on Job page
+merge_request: 21777
 author:
 type: other

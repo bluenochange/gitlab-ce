@@ -1,9 +1,11 @@
 <script>
+  import _ from 'underscore';
   import timeagoMixin from '~/vue_shared/mixins/timeago';
   import { timeIntervalInWords } from '~/lib/utils/datetime_utility';
   import Icon from '~/vue_shared/components/icon.vue';
   import DetailRow from './sidebar_detail_row.vue';
   import ArtifactsBlock from './artifacts_block.vue';
+  import TriggerBlock from './trigger_block.vue';
 
   export default {
     name: 'SidebarDetailsBlock',
@@ -11,6 +13,7 @@
       ArtifactsBlock,
       DetailRow,
       Icon,
+      TriggerBlock,
     },
     mixins: [timeagoMixin],
     props: {
@@ -85,8 +88,11 @@
         );
       },
       hasArtifact() {
-        return this.job && this.job.artifact && Object.keys(this.job.artifact).length > 0;
+        return !_.isEmpty(this.job.artifact);
       },
+      hasTriggers() {
+        return !_.isEmpty(this.job.trigger);
+      }
     },
   };
 </script>
@@ -237,6 +243,10 @@
       <artifacts-block
         v-if="hasArtifact"
         :artifact="job.artifact"
+      />
+      <trigger-block
+        v-if="hasTriggers"
+        :trigger="job.trigger"
       />
     </template>
     <gl-loading-icon
