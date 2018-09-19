@@ -98,6 +98,6 @@ module UsersHelper
 
   def show_overview_tab?
     # enable feature by setting cookie: document.cookie = "user_overview_tab=true";
-    cookies['user_overview_tab'] == 'true'
+    Gitlab::Utils.to_boolean(cookies['user_overview_tab'])
   end
 end
