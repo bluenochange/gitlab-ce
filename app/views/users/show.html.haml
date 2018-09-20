@@ -91,7 +91,7 @@
         .fade-left= icon('angle-left')
         .fade-right= icon('angle-right')
         %ul.nav-links.user-profile-nav.scrolling-tabs.nav.nav-tabs
-          - if profile_tab?(:overview) && show_overview_tab?
+          - if profile_tab?(:overview)
             %li.js-overview-tab
               = link_to user_overview_path, data: { target: 'div#overview', action: 'overview', toggle: 'tab' } do
                 Overview
@@ -118,7 +118,7 @@
 
   %div{ class: container_class }
     .tab-content
-      - if profile_tab?(:overview) && show_overview_tab?
+      - if profile_tab?(:overview)
         #overview.tab-pane
           = render "users/overview"
 
