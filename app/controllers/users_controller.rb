@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
       format.json do
         load_events
-        pager_json("events/_events", @events.count)
+        pager_json("events/_events", @events.count, events: @events)
       end
     end
   end
@@ -35,18 +35,6 @@ class UsersController < ApplicationController
   def overview
     respond_to do |format|
       format.html { render 'show' }
-    end
-  end
-
-  def overview_activities
-    respond_to do |format|
-      format.json do
-        load_events
-        render json: {
-          html: view_to_html_string("events/_events", events: @events),
-          count: @events.count
-        }
-      end
     end
   end
 
@@ -69,10 +57,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { render 'show' }
       format.json do
-        render json: {
-          html: view_to_html_string("shared/projects/_list", projects: @projects),
-          count: @projects.count
-        }
+        pager_json("shared/projects/_list", @projects.count, projects: @projects)
       end
     end
   end
