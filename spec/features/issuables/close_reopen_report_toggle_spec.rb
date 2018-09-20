@@ -103,6 +103,17 @@ describe 'Issuables Close/Reopen/Report toggle' do
           expect(page).not_to have_link('Close issue')
           expect(page).not_to have_link('Reopen issue')
         end
+
+        context 'when the merge request author is the user' do
+          let(:issuable) { create(:merge_request, :merged, source_project: project, author: user) }
+
+          it 'shows only the `Edit` button' do
+            expect(page).to have_link('Edit')
+            expect(page).not_to have_link('Report abuse')
+            expect(page).not_to have_link('Close issue')
+            expect(page).not_to have_link('Reopen issue')
+          end
+        end
       end
     end
 
