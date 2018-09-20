@@ -1,8 +1,9 @@
 - is_current_user = issuable_author_is_current_user(issuable)
 - display_issuable_type = issuable_display_type(issuable)
 - button_method = issuable_close_reopen_button_method(issuable)
+- close_reopen_buttons_hidden = issuable_button_visibility(issuable, true) == 'hidden' && issuable_button_visibility(issuable, false) == 'hidden'
 
-- if can_update
+- if can_update && !close_reopen_buttons_hidden
   - if is_current_user
     = link_to "Close #{display_issuable_type}", close_issuable_path(issuable), method: button_method,
               class: "d-none d-sm-none d-md-block btn btn-grouped btn-close js-btn-issue-action #{issuable_button_visibility(issuable, true)}", title: "Close #{display_issuable_type}"

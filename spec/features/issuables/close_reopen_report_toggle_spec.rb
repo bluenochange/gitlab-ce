@@ -93,6 +93,17 @@ describe 'Issuables Close/Reopen/Report toggle' do
       end
 
       it_behaves_like 'an issuable close/reopen/report toggle'
+
+      context 'when the merge request is merged' do
+        let(:issuable) { create(:merge_request, :merged, source_project: project) }
+
+        it 'shows only the `Report abuse` and `Edit` button' do
+          expect(page).to have_link('Report abuse')
+          expect(page).to have_link('Edit')
+          expect(page).not_to have_link('Close issue')
+          expect(page).not_to have_link('Reopen issue')
+        end
+      end
     end
 
     context 'when user doesnt have permission to update' do
