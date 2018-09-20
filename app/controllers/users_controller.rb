@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def overview
+  def activity
     respond_to do |format|
       format.html { render 'show' }
     end

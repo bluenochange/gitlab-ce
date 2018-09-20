@@ -93,11 +93,11 @@
         %ul.nav-links.user-profile-nav.scrolling-tabs.nav.nav-tabs
           - if profile_tab?(:overview)
             %li.js-overview-tab
-              = link_to user_overview_path, data: { target: 'div#overview', action: 'overview', toggle: 'tab' } do
+              = link_to user_path, data: { target: 'div#overview', action: 'overview', toggle: 'tab' } do
                 Overview
           - if profile_tab?(:activity)
             %li.js-activity-tab
-              = link_to user_path, data: { target: 'div#activity', action: 'activity', toggle: 'tab' } do
+              = link_to user_activity_path, data: { target: 'div#activity', action: 'activity', toggle: 'tab' } do
                 Activity
           - if profile_tab?(:groups)
             %li.js-groups-tab

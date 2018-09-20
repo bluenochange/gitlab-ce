@@ -82,7 +82,7 @@ const CALENDAR_TEMPLATES = {
 export default class UserTabs {
   constructor({ defaultAction, action, parentEl }) {
     this.loaded = {};
-    this.defaultAction = defaultAction || 'activity';
+    this.defaultAction = defaultAction || 'overview';
     this.action = action || this.defaultAction;
     this.$parentEl = $(parentEl) || $(document);
     this.windowLocation = window.location;
