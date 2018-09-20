@@ -509,4 +509,17 @@ describe('Actions Notes Store', () => {
       expect(mrWidgetEventHub.$emit).toHaveBeenCalledWith('mr.discussion.updated');
     });
   });
+
+  describe('expandDiscussionsFromHash', () => {
+    it('should expand discussion that matches hash', done => {
+      testAction(
+        actions.expandDiscussionsFromHash,
+        `discussion_${discussionMock.id}`,
+        { discussionsFromHash: () => [discussionMock] },
+        [],
+        [{ type: 'expandDiscussion', payload: { discussionId: discussionMock.id } }],
+        done,
+      );
+    });
+  });
 });

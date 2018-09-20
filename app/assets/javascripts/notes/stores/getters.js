@@ -1,6 +1,9 @@
 import _ from 'underscore';
 import * as constants from '../constants';
-import { reduceDiscussionsToLineCodes } from './utils';
+import {
+  reduceDiscussionsToLineCodes,
+  whereDiscussionMatchesHash,
+} from './utils';
 import { collapseSystemNotes } from './collapse_utils';
 
 export const discussions = state => collapseSystemNotes(state.discussions);
@@ -190,6 +193,9 @@ export const firstUnresolvedDiscussionId = (state, getters) => diffOrder => {
   }
   return getters.unresolvedDiscussionsIdsByDate[0];
 };
+
+export const discussionsFromHash = (state, getters) => hash =>
+  getters.discussions.filter(whereDiscussionMatchesHash(hash));
 
 // prevent babel-plugin-rewire from generating an invalid default during karma tests
 export default () => {};

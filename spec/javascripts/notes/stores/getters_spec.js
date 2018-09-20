@@ -1,4 +1,4 @@
-import * as getters from '~/notes/stores/getters';
+import gettersModule, * as getters from '~/notes/stores/getters';
 import {
   notesDataMock,
   userDataMock,
@@ -262,6 +262,23 @@ describe('Getters Notes Store', () => {
 
       expect(getters.firstUnresolvedDiscussionId(state, localGettersFalsy)(true)).toBeFalsy();
       expect(getters.firstUnresolvedDiscussionId(state, localGettersFalsy)(false)).toBeFalsy();
+    });
+  });
+
+  describe('discussionsFromHash', () => {
+    it('should filter discussions with "whereDiscussionMatchesHash"', () => {
+      const matcherSpy = jasmine.createSpy('matcher').and.returnValue(true);
+      const whereDiscussionMatchesHash = spyOnDependency(gettersModule, 'whereDiscussionMatchesHash').and.returnValue(matcherSpy);
+      const hash = 'TEST_HASH';
+      const localGetters = {
+        discussions: state.discussions,
+      };
+
+      const result = getters.discussionsFromHash(state, localGetters)(hash);
+
+      expect(result).toEqual(localGetters.discussions);
+      expect(whereDiscussionMatchesHash).toHaveBeenCalledWith(hash);
+      expect(matcherSpy.calls.allArgs()).toEqual(localGetters.discussions.map((...args) => args));
     });
   });
 });

@@ -344,5 +344,11 @@ export const updateMergeRequestWidget = () => {
   mrWidgetEventHub.$emit('mr.discussion.updated');
 };
 
+export const expandDiscussionsFromHash = ({ getters, dispatch }, hash) => {
+  getters.discussionsFromHash(hash)
+    .map(({ id }) => ({ discussionId: id }))
+    .forEach(x => dispatch('expandDiscussion', x));
+};
+
 // prevent babel-plugin-rewire from generating an invalid default during karma tests
 export default () => {};
