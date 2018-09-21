@@ -74,6 +74,7 @@ describe 'Contributions Calendar', :js do
   describe 'calendar day selection' do
     before do
       visit user.username
+      page.find('.js-activity-tab a').click
       wait_for_requests
     end
 
@@ -108,6 +109,7 @@ describe 'Contributions Calendar', :js do
       describe 'deselect calendar day' do
         before do
           cells[0].click
+          page.find('.js-activity-tab a').click
           wait_for_requests
         end
 
@@ -122,6 +124,7 @@ describe 'Contributions Calendar', :js do
     shared_context 'visit user page' do
       before do
         visit user.username
+        page.find('.js-activity-tab a').click
         wait_for_requests
       end
     end
