@@ -9,10 +9,9 @@ module Clusters
         @provider = provider
 
         configure_provider
-        create_gitlab_service_account!
         configure_kubernetes
+        create_gitlab_service_account!
 
-        cluster.save!
       rescue Google::Apis::ServerError, Google::Apis::ClientError, Google::Apis::AuthorizationError => e
         provider.make_errored!("Failed to request to CloudPlatform; #{e.message}")
       rescue Kubeclient::HttpError => e
@@ -24,7 +23,10 @@ module Clusters
       private
 
       def create_gitlab_service_account!
-        Clusters::Gcp::Kubernetes::CreateServiceAccountService.new(kube_client, rbac: create_rbac_cluster?).execute
+        Clusters::Gcp::Kubernetes::CreateServiceAccountService.new(kube_client,
+                                                                   cluster.platform_kubernetes.actual_namespace,
+                                                                   rbac: create_rbac_cluster?
+                                                                  ).execute
       end
 
       def configure_provider
@@ -41,6 +43,8 @@ module Clusters
           password: gke_cluster.master_auth.password,
           authorization_type: authorization_type,
           token: request_kubernetes_token)
+
+        cluster.save!
       end
 
       def request_kubernetes_token

@@ -4,10 +4,11 @@ module Clusters
   module Gcp
     module Kubernetes
       class CreateServiceAccountService
-        attr_reader :kubeclient, :rbac
+        attr_reader :kubeclient, :rbac, :service_account_namespace
 
-        def initialize(kubeclient, rbac:)
+        def initialize(kubeclient, namespace, rbac:)
           @kubeclient = kubeclient
+          @service_account_namespace = namespace
           @rbac = rbac
         end
 
@@ -40,10 +41,6 @@ module Clusters
 
         def service_account_name
           SERVICE_ACCOUNT_NAME
-        end
-
-        def service_account_namespace
-          SERVICE_ACCOUNT_NAMESPACE
         end
       end
     end

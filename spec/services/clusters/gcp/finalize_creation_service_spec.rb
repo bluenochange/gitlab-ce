@@ -11,6 +11,7 @@ describe Clusters::Gcp::FinalizeCreationService do
     let(:gcp_project_id) { provider.gcp_project_id }
     let(:zone) { provider.zone }
     let(:cluster_name) { cluster.name }
+    let(:namespace) { "#{cluster.project.path}-#{cluster.project.id}" }
 
     subject { described_class.new.execute(provider) }
 
@@ -51,8 +52,8 @@ describe Clusters::Gcp::FinalizeCreationService do
       context 'service account and token created' do
         before do
           stub_kubeclient_discover(api_url)
-          stub_kubeclient_create_service_account(api_url)
-          stub_kubeclient_create_secret(api_url)
+          stub_kubeclient_create_service_account(api_url, namespace: namespace)
+          stub_kubeclient_create_secret(api_url, namespace: namespace)
         end
 
         shared_context 'kubernetes token successfully fetched' do
@@ -137,7 +138,14 @@ describe Clusters::Gcp::FinalizeCreationService do
 
         context 'when service account fails to create' do
           before do
-            stub_kubeclient_create_service_account_error(api_url)
+            stub_kubeclient_discover(api_url)
+            stub_kubeclient_get_secret(
+              api_url,
+              {
+                metadata_name: secret_name,
+                token: Base64.encode64('sample-token')
+              } )
+            stub_kubeclient_create_service_account_error(api_url, namespace: namespace)
           end
 
           it_behaves_like 'error'

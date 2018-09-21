@@ -5,13 +5,19 @@ require 'spec_helper'
 describe Clusters::Gcp::Kubernetes::CreateServiceAccountService do
   include KubernetesHelpers
 
-  let(:service) { described_class.new(kubeclient, rbac: rbac) }
+  let(:service) { described_class.new(kubeclient, namespace, rbac: rbac) }
 
   describe '#execute' do
     let(:rbac) { false }
     let(:api_url) { 'http://111.111.111.111' }
     let(:username) { 'admin' }
     let(:password) { 'xxx' }
+    let(:namespace) do
+      create(:cluster,
+             :project, :provided_by_gcp,
+             platform_kubernetes: create(:cluster_platform_kubernetes, :configured)
+            ).platform_kubernetes.actual_namespace
+    end
 
     let(:kubeclient) do
       Gitlab::Kubernetes::KubeClient.new(
@@ -26,18 +32,18 @@ describe Clusters::Gcp::Kubernetes::CreateServiceAccountService do
     context 'when params are correct' do
       before do
         stub_kubeclient_discover(api_url)
-        stub_kubeclient_create_service_account(api_url)
-        stub_kubeclient_create_secret(api_url)
+        stub_kubeclient_create_service_account(api_url, namespace: namespace)
+        stub_kubeclient_create_secret(api_url, namespace: namespace)
       end
 
       shared_examples 'creates service account and token' do
         it 'creates a kubernetes service account' do
           subject
 
-          expect(WebMock).to have_requested(:post, api_url + '/api/v1/namespaces/default/serviceaccounts').with(
+          expect(WebMock).to have_requested(:post, api_url + "/api/v1/namespaces/#{namespace}/serviceaccounts").with(
             body: hash_including(
               kind: 'ServiceAccount',
-              metadata: { name: 'gitlab', namespace: 'default' }
+              metadata: { name: 'gitlab', namespace: namespace }
             )
           )
         end
@@ -45,12 +51,12 @@ describe Clusters::Gcp::Kubernetes::CreateServiceAccountService do
         it 'creates a kubernetes secret of type ServiceAccountToken' do
           subject
 
-          expect(WebMock).to have_requested(:post, api_url + '/api/v1/namespaces/default/secrets').with(
+          expect(WebMock).to have_requested(:post, api_url + "/api/v1/namespaces/#{namespace}/secrets").with(
             body: hash_including(
               kind: 'Secret',
               metadata: {
                 name: 'gitlab-token',
-                namespace: 'default',
+                namespace: namespace,
                 annotations: {
                   'kubernetes.io/service-account.name': 'gitlab'
                 }
@@ -86,7 +92,7 @@ describe Clusters::Gcp::Kubernetes::CreateServiceAccountService do
                 kind: 'ClusterRole',
                 name: 'cluster-admin'
               },
-              subjects: [{ kind: 'ServiceAccount', namespace: 'default', name: 'gitlab' }]
+              subjects: [{ kind: 'ServiceAccount', namespace: namespace, name: 'gitlab' }]
             )
           )
         end
