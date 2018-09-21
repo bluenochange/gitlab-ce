@@ -20,6 +20,8 @@ module QA
             push.project.visit!
 
             return if Page::Menu::Main.act { has_personal_area?(wait: 1) }
+            
+            puts "Not signed in. Attempting to sign in again."
 
             Page::Menu::Main.act { sign_out }
 
