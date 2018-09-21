@@ -2,7 +2,7 @@ import $ from 'jquery';
 import axios from '~/lib/utils/axios_utils';
 import Activities from '~/activities';
 import { localTimeAgo } from '~/lib/utils/datetime_utility';
-import { __ } from '~/locale';
+import { __, s__ } from '~/locale';
 import flash from '~/flash';
 import ActivityCalendar from './activity_calendar';
 import UserOverviewBlock from './user_overview_block';
@@ -67,13 +67,13 @@ const CALENDAR_TEMPLATES = {
     <div class="clearfix calendar">
       <div class="js-contrib-calendar"></div>
       <div class="calendar-hint bottom-right">
-        Summary of issues, merge requests, push events, and comments
+        ${s__('UserProfile|Summary of issues, merge requests, push events, and comments')}
       </div>
     </div>
   `,
   overview: `
     <div class="clearfix calendar">
-      <div class="calendar-hint">Issues, merge requests, pushes and comments.</div>
+      <div class="calendar-hint">${s__('UserProfile|Issues, merge requests, pushes and comments.')}</div>
       <div class="js-contrib-calendar prepend-top-20"></div>
     </div>
   `,

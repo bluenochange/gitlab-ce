@@ -3,7 +3,7 @@
     .calendar-block
       .content-block.hide-bottom-border.d-sm-block
         %h4
-          Activity
+          = s_('UserProfile|Activity')
         .user-calendar.d-none.d-sm-block.text-left{ data: { calendar_path: user_calendar_path(@user, :json), calendar_activities_path: user_calendar_activities_path, utc_offset: Time.zone.utc_offset } }
           %h4.center.light
             %i.fa.fa-spinner.fa-spin
@@ -13,20 +13,20 @@
       .activities-block
         .content-block.d-sm-block
           %h5.prepend-top-10
-            Recent contributions
+            = s_('UserProfile|Recent contributions')
           .overview_content_list{ data: { href: user_path } }
             %h4.center.light
               %i.fa.fa-spinner.fa-spin
         .prepend-top-10
-          = link_to 'View all', user_activity_path, class: "hide js-view-all"
+          = link_to s_('UserProfile|View all'), user_activity_path, class: "hide js-view-all"
 
   .col-md-6.col-sm-12
     .projects-block
       .content-block.d-none.d-sm-block
         %h4
-          Personal projects
+          = s_('UserProfile|Personal projects')
         .overview_content_list{ data: { href: user_projects_path } }
           %h4.center.light
             %i.fa.fa-spinner.fa-spin
       .prepend-top-10
-        = link_to 'View all', user_projects_path, class: "hide js-view-all"
+        = link_to s_('UserProfile|View all'), user_projects_path, class: "hide js-view-all"
