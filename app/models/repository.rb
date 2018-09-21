@@ -785,6 +785,12 @@ class Repository
     multi_action(user, **options)
   end
 
+  def chmod_file(user, path, execute_filemode, **options)
+    options[:actions] = [{ action: :chmod, file_path: path, execute_filemode: execute_filemode }]
+
+    multi_action(user, **options)
+  end
+
   def with_cache_hooks
     result = yield
 

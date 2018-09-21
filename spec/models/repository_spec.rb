@@ -686,6 +686,14 @@ describe Repository do
     end
   end
 
+  describe '#chmod_file' do
+    it 'changes the execute_filemode of the file successfully' do
+      expect do
+        repository.chmod_file(user, 'README', true, message: 'Chmods +x', branch_name: 'master')
+      end.to change { repository.blob_at_branch('master', 'README').mode }.from('100644').to('100755')
+    end
+  end
+
   describe "search_files_by_content" do
     let(:results) { repository.search_files_by_content('feature', 'master') }
     subject { results }
