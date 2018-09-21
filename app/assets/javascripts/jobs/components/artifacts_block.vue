@@ -12,8 +12,7 @@
     props: {
       artifact: {
         type: Object,
-        required: false,
-        default: () => ({}),
+        required: true,
       },
     },
     computed: {
