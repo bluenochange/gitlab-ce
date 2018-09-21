@@ -3308,6 +3308,9 @@ msgstr ""
 msgid "Issues can be bugs, tasks or ideas to be discussed. Also, issues are searchable and filterable."
 msgstr ""
 
+msgid "Issues, merge requests, pushes and comments."
+msgstr ""
+
 msgid "Jan"
 msgstr ""
 
@@ -5650,6 +5653,9 @@ msgstr ""
 msgid "Subscribe at project level"
 msgstr ""
 
+msgid "Summary of issues, merge requests, push events, and comments (Timezone: %{utcFormatted})"
+msgstr ""
+
 msgid "Switch branch/tag"
 msgstr ""
 
@@ -6481,9 +6487,6 @@ msgstr ""
 msgid "UserProfile|Groups"
 msgstr ""
 
-msgid "UserProfile|Issues, merge requests, pushes and comments."
-msgstr ""
-
 msgid "UserProfile|Most Recent Activity"
 msgstr ""
 
@@ -6503,9 +6506,6 @@ msgid "UserProfile|Snippets"
 msgstr ""
 
 msgid "UserProfile|Subscribe"
-msgstr ""
-
-msgid "UserProfile|Summary of issues, merge requests, push events, and comments"
 msgstr ""
 
 msgid "UserProfile|This user has a private profile"

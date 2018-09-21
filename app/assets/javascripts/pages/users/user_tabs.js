@@ -2,7 +2,7 @@ import $ from 'jquery';
 import axios from '~/lib/utils/axios_utils';
 import Activities from '~/activities';
 import { localTimeAgo } from '~/lib/utils/datetime_utility';
-import { __, s__ } from '~/locale';
+import { __, sprintf } from '~/locale';
 import flash from '~/flash';
 import ActivityCalendar from './activity_calendar';
 import UserOverviewBlock from './user_overview_block';
@@ -66,18 +66,19 @@ const CALENDAR_TEMPLATES = {
   activity: `
     <div class="clearfix calendar">
       <div class="js-contrib-calendar"></div>
-      <div class="calendar-hint bottom-right">
-        ${s__('UserProfile|Summary of issues, merge requests, push events, and comments')}
-      </div>
+      <div class="calendar-hint bottom-right"></div>
     </div>
   `,
   overview: `
     <div class="clearfix calendar">
-      <div class="calendar-hint">${s__('UserProfile|Issues, merge requests, pushes and comments.')}</div>
+      <div class="calendar-hint"></div>
       <div class="js-contrib-calendar prepend-top-20"></div>
     </div>
   `,
 };
+
+const CALENDAR_PERIOD_6_MONTHS = -6;
+const CALENDAR_PERIOD_12_MONTHS = -12;
 
 export default class UserTabs {
   constructor({ defaultAction, action, parentEl }) {
@@ -197,7 +198,7 @@ export default class UserTabs {
   }
 
   loadActivityCalendar(action) {
-    const monthsAgo = action === 'overview' ? -6 : -12;
+    const monthsAgo = action === 'overview' ? CALENDAR_PERIOD_6_MONTHS : CALENDAR_PERIOD_12_MONTHS;
     const $calendarWrap = this.$parentEl.find('.tab-pane.active .user-calendar');
     const calendarPath = $calendarWrap.data('calendarPath');
     const calendarActivitiesPath = $calendarWrap.data('calendarActivitiesPath');
@@ -212,9 +213,15 @@ export default class UserTabs {
       .then(({ data }) => {
         $calendarWrap.html(CALENDAR_TEMPLATES[action]);
 
+        let calendarHint = '';
+
         if (action === 'activity') {
-          $calendarWrap.find('.calendar-hint').append(`(Timezone: ${utcFormatted})`);
+          calendarHint = sprintf(__('Summary of issues, merge requests, push events, and comments (Timezone: %{utcFormatted})'), { utcFormatted });
+        } else if (action === 'overview') {
+          calendarHint = __('Issues, merge requests, pushes and comments.');
         }
+
+        $calendarWrap.find('.calendar-hint').text(calendarHint);
 
         // eslint-disable-next-line no-new
         new ActivityCalendar('.tab-pane.active .js-contrib-calendar', '.tab-pane.active .user-calendar-activities', data, calendarActivitiesPath, utcOffset, 0, monthsAgo);
