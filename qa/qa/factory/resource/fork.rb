@@ -14,7 +14,9 @@ module QA
         product(:user) { |factory| factory.user }
 
         def fabricate!
+          Capybara::Screenshot.screenshot_and_save_page
           push.project.visit!
+          Capybara::Screenshot.screenshot_and_save_page
           Page::Project::Show.act { fork_project }
 
           Page::Project::Fork::New.perform do |fork_new|

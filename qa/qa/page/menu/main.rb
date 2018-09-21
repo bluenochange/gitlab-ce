@@ -62,12 +62,13 @@ module QA
 
         def has_personal_area?(wait: Capybara.default_max_wait_time)
           using_wait_time(wait) do
-             page.has_selector?(element_selector_css(:user_avatar))
+            page.has_selector?(element_selector_css(:user_avatar))
           end
         end
 
         def assert_has_personal_area
           raise "Failed to sign in" unless has_personal_area?
+          screenshot_and_save_page
         end
 
         private

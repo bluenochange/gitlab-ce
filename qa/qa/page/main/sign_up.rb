@@ -17,6 +17,7 @@ module QA
           fill_in :new_user_email, with: user.email
           fill_in :new_user_email_confirmation, with: user.email
           fill_in :new_user_password, with: user.password
+          screenshot_and_save_page
           click_button 'Register'
 
           Page::Menu::Main.act { assert_has_personal_area }
